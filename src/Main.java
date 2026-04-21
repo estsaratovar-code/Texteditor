@@ -14,30 +14,35 @@ class Main {
         }
         Editor edit=new Editor(l);
         sc=new Scanner(System.in);
-        while(true)
-        {
-            System.out.println("S - Save and Exit");
-            System.out.println("F - Move Forward");
-            System.out.println("B - Move Backward");
-            System.out.println("b - Move to Beginning of Line");
-            System.out.println("e - Move to End of Line");
-            System.out.println("i - Insert");
-            System.out.println("d - Delete");
-            edit.print();
-            edit.printCursor();
-            String input=sc.nextLine();
-            if(input.equals("S")) break;
-            else if(input.equals("F")) edit.forward();
-            else if(input.equals("B")) edit.backward();
-            else if(input.equals("b")) edit.beginning();
-            else if(input.equals("e")) edit.ending();
-            else if(input.equals("i")) edit.insert(sc.nextLine());
-            else if(input.equals("d")) edit.delete();
-            System.out.print("\033[H\033[2J");  
-            System.out.flush();
-            file.delete();
-            file.createNewFile();
-        }
+       while(true)
+{
+    System.out.println("S - Save and Exit");
+    System.out.println("F - Move Forward");
+    System.out.println("B - Move Backward");
+    System.out.println("b - Move to Beginning of Line");
+    System.out.println("e - Move to End of Line");
+    System.out.println("i - Insert");
+    System.out.println("d - Delete");
+
+    edit.print();
+    edit.printCursor();
+
+    String input=sc.nextLine();
+
+    if(input.equals("S")) {
+        edit.save();   
+        break;
+    }
+    else if(input.equals("F")) edit.forward();
+    else if(input.equals("B")) edit.backward();
+    else if(input.equals("b")) edit.beginning();
+    else if(input.equals("e")) edit.ending();
+    else if(input.equals("i")) edit.insert(sc.nextLine());
+    else if(input.equals("d")) edit.delete();
+
+    System.out.print("\033[H\033[2J");  
+    System.out.flush();
+}
         edit.writer.close();
     }
 }
