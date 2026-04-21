@@ -54,29 +54,38 @@ class Editor {
         this.l=l;
         node=position=0;
     }
-    public void forward(){
-        StringBuilder s=l.get(node);
-        if(position==s.length()) {
-            if(node==l.size()-1) node=0;
-            else node++;
-            position=0;
-        }
-        else position++;
-        s=l.get(node);
-        if(s.toString().equals("\n")) forward();
+  public void forward(){
+    if(l.isEmpty()) return;
+
+    StringBuilder s = l.get(node);
+
+    if(position >= s.length()) {
+        node = (node + 1) % l.size();
+        position = 0;
+    } else {
+        position++;
     }
-    public void backward(){
-        StringBuilder s=l.get(node);
-        if(position==0) {
-            if(node==0) node=l.size()-1;
-            else node--;
-            s=l.get(node);
-            position=s.length();
-        }
-        else position--;
-        s=l.get(node);
-        if(s.toString().equals("\n")) backward();
+
+    if(l.get(node).toString().equals("\n")) {
+        node = (node + 1) % l.size();
+        position = 0;
     }
+}
+  public void backward(){
+    if(l.isEmpty()) return;
+
+    if(position == 0) {
+        node = (node - 1 + l.size()) % l.size();
+        position = l.get(node).length();
+    } else {
+        position--;
+    }
+
+    if(l.get(node).toString().equals("\n")) {
+        node = (node - 1 + l.size()) % l.size();
+        position = l.get(node).length();
+    }
+}
     public void insert(String input) {
         StringBuilder s=l.get(node);
         if(s.length()==0) s.append(input);
@@ -84,18 +93,22 @@ class Editor {
         position+=input.length();
     }
     public void delete() {
-        StringBuilder s=l.get(node);
-        if(position==0 && node>0){
-            StringBuilder prev=l.get(node-1);
-            position=prev.length();
-            prev.append(s);
-            l.remove(node);
-        }
-        else if(position>0){
-            s.delete(position-1,position);
-            position--;
-        }
+    if(l.isEmpty()) return;
+
+    StringBuilder s = l.get(node);
+
+    if(position == 0 && node > 0){
+        StringBuilder prev = l.get(node-1);
+        position = prev.length();
+        prev.append(s);
+        l.remove(node);
+        node--;
     }
+    else if(position > 0){
+        s.delete(position-1, position);
+        position--;
+    }
+}
     public void save() throws Exception {
     FileWriter writer = new FileWriter("randomtext.txt");
     for(StringBuilder i : l) {
@@ -112,10 +125,14 @@ class Editor {
        position=0;
     }
     public void ending() {
-       while(!l.get(node).toString().equals("\n")) node++;
-       node=node-1;
-       position=l.get(node).length();
+    while(node < l.size() && 
+          !l.get(node).toString().equals("\n")) {
+        node++;
     }
+
+    if(node > 0) node--;
+    position = l.get(node).length();
+}
    public void print() {
     for(StringBuilder i:l) {
         System.out.print(i);
