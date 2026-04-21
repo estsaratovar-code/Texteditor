@@ -96,6 +96,16 @@ class Editor {
             position--;
         }
     }
+    public void save() throws Exception {
+    FileWriter writer = new FileWriter("randomtext.txt");
+    for(StringBuilder i : l) {
+        writer.write(i.toString());
+        if(!i.toString().equals("\n")) {
+            writer.write(" ");
+        }
+    }
+    writer.close();
+}
     public void beginning() {
        while(node>0 && !l.get(node).toString().equals("\n")) node--;
        if(node!=0) node=node+1;
