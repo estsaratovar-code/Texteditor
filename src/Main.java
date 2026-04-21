@@ -116,17 +116,15 @@ class Editor {
        node=node-1;
        position=l.get(node).length();
     }
-    public void print() throws Exception{
-       
-        for(StringBuilder i:l) {
-            writer.write(i.toString());
-            System.out.print(i);
-            if(!i.toString().equals("\n")) {
-                writer.write(" ");
-                System.out.print(" ");
-            }
+   public void print() {
+    for(StringBuilder i:l) {
+        System.out.print(i);
+        if(!i.toString().equals("\n")) {
+            System.out.print(" ");
         }
     }
+    System.out.println();
+}
     public void printCursor() {
         System.out.print("Cursor At : ");
         StringBuilder s=l.get(node);
