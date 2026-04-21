@@ -1,10 +1,11 @@
 import java.util.*;
 import java.io.*;
+import com.murcia.utils.*;
 class Main {
     public static void main(String[] args) throws Exception{
         File file=new File("randomtext.txt");
         Scanner sc=new Scanner(file);
-        LinkedList<StringBuilder> l=new LinkedList<StringBuilder>();
+        ListaEnlazada<StringBuilder> l=new ColaEnlazada<StringBuilder>();
         while(sc.hasNextLine()) {
             String line=sc.nextLine();
             String[] words=line.split("\\s");
@@ -47,10 +48,10 @@ class Main {
     }
 }
 class Editor {
-    LinkedList<StringBuilder> l;
+    ListaEnlazada<StringBuilder> l;
     int node,position;
     FileWriter writer;
-    public Editor(LinkedList<StringBuilder> l) {
+    public Editor(ColaEnlazada<StringBuilder> l) {
         this.l=l;
         node=position=0;
     }
@@ -133,14 +134,16 @@ class Editor {
     if(node > 0) node--;
     position = l.get(node).length();
 }
-   public void print() {
-    for(StringBuilder i:l) {
-        System.out.print(i);
+   public void print() throws Exception{
+       writer= new FileWriter("randomtext.txt");
+    for(int i=0,i<1.size();i++) {
+       writer.write(l.get(i).toString());
+        System.out.print (i);
         if(!i.toString().equals("\n")) {
+            writer.write(" ");
             System.out.print(" ");
         }
     }
-    System.out.println();
 }
     public void printCursor() {
         System.out.print("Cursor At : ");
