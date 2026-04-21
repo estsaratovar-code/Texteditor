@@ -117,7 +117,7 @@ class Editor {
        position=l.get(node).length();
     }
     public void print() throws Exception{
-        writer= new FileWriter("randomtext.txt");
+       
         for(StringBuilder i:l) {
             writer.write(i.toString());
             System.out.print(i);
